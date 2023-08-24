@@ -10,7 +10,7 @@ public class Usuarios {
 	private Long id ;
 	private String nombre;
 	private String apellido;
-	private String telefofono;
+	private String telefono;
 	private String password;
 	private String calle ;
 	private String numero ;
@@ -20,11 +20,11 @@ public class Usuarios {
 	private Integer estado;
 	private static long total  = 0;
 	
-	public Usuarios(String nombre, String apellido, String telefofono, String password,String calle, String numero, Integer cp, String colonia, String ciudad, Integer estado) {
+	public Usuarios(String nombre, String apellido, String telefono, String password,String calle, String numero, Integer cp, String colonia, String ciudad, Integer estado) {
 		super();
 		this.nombre = nombre;
 		this.apellido = apellido;
-		this.telefofono = telefofono;
+		this.telefono = telefono;
 		this.password = password;
 		this.calle = calle;
 		this.numero = numero;
@@ -57,12 +57,12 @@ public class Usuarios {
 		this.apellido = apellido;
 	}
 
-	public String getTelefofono() {
-		return telefofono;
+	public String getTelefono() {
+		return telefono;
 	}
 
-	public void setTelefofono(String telefofono) {
-		this.telefofono = telefofono;
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
 	}
 
 	public String getPassword() {
@@ -135,7 +135,7 @@ public class Usuarios {
 
 	@Override
 	public String toString() {
-		return "Usuario [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", telefofono=" + telefofono
+		return "Usuario [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", telefono=" + telefono
 				+ ", password=" + password + ", calle=" + calle + ", numero=" + numero + ", cp=" + cp + ", colonia="
 				+ colonia + ", ciudad=" + ciudad + ", estado=" + estado + "]";
 	}//toString
