@@ -1,5 +1,5 @@
 package com.kotomitl.kotomitl.model;
-
+ 
 public class Compras {
 	private Long id;
 	private Integer cantidadTotal;

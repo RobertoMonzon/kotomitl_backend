@@ -88,8 +88,8 @@ public class AdminService {
 		for (Admin admin : lista) {
 			if (admin.getId().equals(id)) {
 				if(nombre != null) admin.setNombre(nombre);
-				if(email != null) admin.setNombre(email);
-				if(password != null) admin.setNombre(password);
+				if(email != null) admin.setEmail(email);
+				if(password != null) admin.setPassword(password);
 				tmp = admin;
 				break;
 			}//if
