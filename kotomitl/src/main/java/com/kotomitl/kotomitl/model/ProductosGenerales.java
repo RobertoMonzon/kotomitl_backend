@@ -5,18 +5,18 @@ public class ProductosGenerales {
 	private String nombre;
 	private String origen;
 	private String materiales;
-	private String surgerencia;
+	private String sugerencia;
 	private String adicional;
 	private String descripcion;
 	private static long total = 0;
 	
-	public ProductosGenerales(String nombre, String origen, String materiales, String surgerencia, String adicional,
+	public ProductosGenerales(String nombre, String origen, String materiales, String sugerencia, String adicional,
 			String descripcion) {
 		super();
 		this.nombre = nombre;
 		this.origen = origen;
 		this.materiales = materiales;
-		this.surgerencia = surgerencia;
+		this.sugerencia = sugerencia;
 		this.adicional = adicional;
 		this.descripcion = descripcion;
 		ProductosGenerales.total++;
@@ -53,12 +53,12 @@ public class ProductosGenerales {
 		this.materiales = materiales;
 	}
 
-	public String getSurgerencia() {
-		return surgerencia;
+	public String getSugerencia() {
+		return sugerencia;
 	}
 
-	public void setSurgerencia(String surgerencia) {
-		this.surgerencia = surgerencia;
+	public void setSugerencia(String sugerencia) {
+		this.sugerencia = sugerencia;
 	}
 
 	public String getAdicional() {
@@ -92,7 +92,7 @@ public class ProductosGenerales {
 	@Override
 	public String toString() {
 		return "ProductosGeneral [id=" + id + ", nombre=" + nombre + ", origen=" + origen + ", materiales=" + materiales
-				+ ", surgerencia=" + surgerencia + ", adicional=" + adicional + ", descripcion=" + descripcion + "]";
+				+ ", sugerencia=" + sugerencia + ", adicional=" + adicional + ", descripcion=" + descripcion + "]";
 	}
 	
 	

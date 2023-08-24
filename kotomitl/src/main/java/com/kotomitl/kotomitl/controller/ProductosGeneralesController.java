@@ -54,7 +54,7 @@ public class ProductosGeneralesController {
     "nombre": "Sandaliassssssss",
     "origen": "Olmecaaaaaaaa",
     "materiales": "100% Cuerooooooo",
-    "surgerencia": "Limpiar solamente con aguaaaaaaa",
+    "sugerencia": "Limpiar solamente con aguaaaaaaa",
     "adicional": "Fabricada por mujeressssssss",
     "descripcion": "Bonitas sandalias Olmecas en varios coloressssssssss"
 	}
@@ -70,10 +70,10 @@ public class ProductosGeneralesController {
 			@RequestParam(required = false) String nombre,
 			@RequestParam(required = false) String origen,
 			@RequestParam(required = false) String materiales,
-			@RequestParam(required = false) String surgerencia,
+			@RequestParam(required = false) String sugerencia,
 			@RequestParam(required = false) String adicional,
 			@RequestParam(required = false) String descripcion) {
-		return varProductosGeneralesService.updateProductosGenerales(id, nombre, origen, materiales,surgerencia,adicional,descripcion);		
+		return varProductosGeneralesService.updateProductosGenerales(id, nombre, origen, materiales,sugerencia,adicional,descripcion);
 	}
 
 }

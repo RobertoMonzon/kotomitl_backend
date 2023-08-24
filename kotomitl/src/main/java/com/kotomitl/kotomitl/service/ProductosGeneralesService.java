@@ -59,14 +59,14 @@ public final ArrayList<ProductosGenerales> lista = new ArrayList<>();
 		}
 		
 		//PUT ACTUALIZAR DATOS DE UN PRODUCTO GENERAL
-		public ProductosGenerales updateProductosGenerales(Long id, String nombre, String origen, String materiales, String surgerencia, String adicional, String descripcion) {
+		public ProductosGenerales updateProductosGenerales(Long id, String nombre, String origen, String materiales, String sugerencia, String adicional, String descripcion) {
 			ProductosGenerales tmp = null;
 			for (ProductosGenerales productosGenerales : lista) {
 				if (productosGenerales.getId().equals(id)) {
 					if(nombre != null) productosGenerales.setNombre(nombre);
 					if(origen != null) productosGenerales.setOrigen(origen);
 					if(materiales != null) productosGenerales.setMateriales(materiales);
-					if(surgerencia != null) productosGenerales.setSurgerencia(surgerencia);
+					if(sugerencia != null) productosGenerales.setSugerencia(sugerencia);
 					if(adicional != null) productosGenerales.setAdicional(adicional);
 					if(descripcion != null) productosGenerales.setDescripcion(descripcion);
 					tmp = productosGenerales;
