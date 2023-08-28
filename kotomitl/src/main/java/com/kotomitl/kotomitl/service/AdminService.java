@@ -1,7 +1,10 @@
 package com.kotomitl.kotomitl.service;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.kotomitl.kotomitl.model.Admin;
 import com.kotomitl.kotomitl.model.ChangePassword;
@@ -12,7 +15,10 @@ import com.kotomitl.kotomitl.repository.AdminRepository;
 public class AdminService {
 
 	private final AdminRepository varAdminRepository;
-
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder; 
+	
 	// Generar constructor para inicializarlo
 	@Autowired
 	public AdminService(AdminRepository varAdminRepository) {
@@ -56,6 +62,8 @@ public class AdminService {
 	public Admin addAdmin(Admin admin) {
 		Admin tmp = null;
 		if(varAdminRepository.findByEmail(admin.getEmail()).isEmpty()) {
+			//cifrar la contraseña
+			admin.setPassword(passwordEncoder.encode(admin.getPassword()));
 			tmp = varAdminRepository.save(admin);	
 		}else {
 			System.out.println("Ya existe ["+admin.getEmail()+"] registrado");
@@ -74,8 +82,10 @@ public class AdminService {
 		if (varAdminRepository.existsById(id)) {
 			tmp = varAdminRepository.findById(id).get();
 			if (varChangePassword.getPassword() != null && varChangePassword.getNewPassword() != null) {
-				if (tmp.getPassword().equals(varChangePassword.getPassword())) {
-					tmp.setPassword(varChangePassword.getNewPassword());
+				//if (tmp.getPassword().equals(varChangePassword.getPassword())) {
+				if(passwordEncoder.matches(varChangePassword.getPassword(), tmp.getPassword())) {	
+				//tmp.setPassword(varChangePassword.getNewPassword());
+					tmp.setPassword(passwordEncoder.encode(varChangePassword.getNewPassword()));
 					varAdminRepository.save(tmp);
 				} else {
 					System.out.println("No coinciden las contraseñas");
@@ -86,6 +96,19 @@ public class AdminService {
 			System.out.println("Administrador con id [" + id + "] no existe");
 		}
 		return tmp;
+	}
+
+	public boolean validarAdmin(Admin admin) {
+		
+	Optional<Admin> adminByEmail = varAdminRepository.findByEmail(admin.getEmail());
+		
+	if (adminByEmail.isPresent()) {
+		Admin user = adminByEmail.get();
+		if(passwordEncoder.matches(admin.getPassword(),user.getPassword())) {
+			return true;
+		}
+	}
+	return false;
 	}
 
 }// getAdmin por su id
