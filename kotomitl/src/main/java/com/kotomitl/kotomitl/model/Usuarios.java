@@ -1,45 +1,57 @@
 package com.kotomitl.kotomitl.model;
 
-//import javax.persistence.Entity;
-//import javax.persistence.Table;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-//@Entity
-//@Table(name="usuario")
+@Entity
+@Table(name="usuarios")
 public class Usuarios {
+	//Para importar ahora los id será desde MySQL, así que se agrega @Id
+	@Id
+	//Generando el valor con lo siguiente
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	
-	private Long id ;
+	@Column (name="id", unique=true,nullable=false)
+	private Long id;
+	
+	@Column (name="nombre",nullable=false)
 	private String nombre;
-	private String apellido;
-	private String telefono;
-	private String password;
-	private String calle ;
-	private String numero ;
-	private Integer cp;
-	private String colonia ;
-	private String ciudad;
-	private Integer estado;
-	private static long total  = 0;
 	
-	public Usuarios(String nombre, String apellido, String telefono, String password,String calle, String numero, Integer cp, String colonia, String ciudad, Integer estado) {
-		super();
+	@Column (name="apellido",nullable=false)
+	private String apellido;
+	
+	@Column (name="telefono",nullable=false)
+	private String telefono;
+	
+	@Column (name="email",nullable=false)
+	private String email;
+	
+	@Column (name="password",nullable=false)
+	private String password;
+	
+	@Column (name="domicilio",nullable=false)
+	private String domicilio ;
+	
+	@Column (name="estado",nullable=false)
+	private Integer estado;
+	
+	
+	public Usuarios() {}
+	
+	public Usuarios(String nombre, String apellido, String telefono, String email, String password, String domicilio,
+			Integer estado) {
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.telefono = telefono;
+		this.email = email;
 		this.password = password;
-		this.calle = calle;
-		this.numero = numero;
-		this.cp = cp;
-		this.colonia = colonia;
-		this.ciudad = ciudad;
+		this.domicilio = domicilio;
 		this.estado = estado;
-		Usuarios.total++;
-		this.id=Usuarios.total;
-	}//public Usuario
-	
-	public Usuarios() {
-		Usuarios.total++;
-		this.id=Usuarios.total;
-	}//public class vacio
+	}
 
 	public String getNombre() {
 		return nombre;
@@ -65,6 +77,14 @@ public class Usuarios {
 		this.telefono = telefono;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public String getPassword() {
 		return password;
 	}
@@ -73,44 +93,12 @@ public class Usuarios {
 		this.password = password;
 	}
 
-	public String getCalle() {
-		return calle;
+	public String getDomicilio() {
+		return domicilio;
 	}
 
-	public void setCalle(String calle) {
-		this.calle = calle;
-	}
-
-	public String getNumero() {
-		return numero;
-	}
-
-	public void setNumero(String numero) {
-		this.numero = numero;
-	}
-
-	public Integer getCp() {
-		return cp;
-	}
-
-	public void setCp(Integer cp) {
-		this.cp = cp;
-	}
-
-	public String getColonia() {
-		return colonia;
-	}
-
-	public void setColonia(String colonia) {
-		this.colonia = colonia;
-	}
-
-	public String getCiudad() {
-		return ciudad;
-	}
-
-	public void setCiudad(String ciudad) {
-		this.ciudad = ciudad;
+	public void setDomicilio(String domicilio) {
+		this.domicilio = domicilio;
 	}
 
 	public Integer getEstado() {
@@ -121,26 +109,16 @@ public class Usuarios {
 		this.estado = estado;
 	}
 
-	public static long getTotal() {
-		return total;
-	}
-
-	public static void setTotal(long total) {
-		Usuarios.total = total;
-	}
-
 	public Long getId() {
 		return id;
 	}
 
 	@Override
 	public String toString() {
-		return "Usuario [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", telefono=" + telefono
-				+ ", password=" + password + ", calle=" + calle + ", numero=" + numero + ", cp=" + cp + ", colonia="
-				+ colonia + ", ciudad=" + ciudad + ", estado=" + estado + "]";
-	}//toString
-
-	
+		return "Usuarios [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", telefono=" + telefono
+				+ ", email=" + email + ", password=" + password + ", domicilio=" + domicilio + ", estado=" + estado
+				+ "]";
+	}
 
 	
 }//public class "Usuario"

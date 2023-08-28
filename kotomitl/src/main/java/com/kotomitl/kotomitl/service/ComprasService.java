@@ -1,77 +1,73 @@
 package com.kotomitl.kotomitl.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.kotomitl.kotomitl.model.Compras;
+import com.kotomitl.kotomitl.repository.ComprasRepository;
 
 @Service
 public class ComprasService {
 	
-	public final ArrayList<Compras> lista = new ArrayList<>();
+	private final ComprasRepository varComprasRepository;
 	
 	@Autowired
-	public ComprasService() {
-		lista.add(new Compras(1, "Calle La Rielera", 490.99));
-		lista.add(new Compras(8, "Calle La Adelita", 1058.56));
-		lista.add(new Compras(5, "Calle La Guerrillera", 845.50));
+	public ComprasService(ComprasRepository varComprasRepository) {
+		super();
+		this.varComprasRepository = varComprasRepository;
 	}
+
 	
-	//GET TODAS LAS COMPRAS
-	public List<Compras> getAllCompras(){
-		return this.lista;
-	}
-	
-	
-	//GET COMPRAS POR SU ID
-	public Compras getCompras(Long id) {
-		Compras tmp = null;
-		for (Compras compras : lista) {
-			if (compras.getId().equals(id)) {
-				tmp = compras;
-				break;
-			}//if
-		}//foreach
-		return tmp;
-	}
-	
-	
-	//DELETE COMPRAS POR SU ID
-	public Compras deleteCompras(Long id) {
-		Compras tmp = null;
-		for (Compras compras : lista) {
-			if (compras.getId().equals(id)) {
-				tmp = lista.remove(lista.indexOf(compras));
-				break;
-			}//if
-		}//foreach
-		return tmp;
-	}
-	
-	//PUT NUEVA COMPRA
-	public Compras addCompras(Compras compras) {
-		lista.add(compras);
-		return compras;
-	}
-	
-	//PUT ACTUALIZAR DATOS DE UNA COMPRA
-	public Compras updateCompras(Long id, Integer cantidadTotal, String direccion, Double precioTotal) {
-		Compras tmp = null;
-		for (Compras compras : lista) {
-			if (compras.getId().equals(id)) {
-				if(cantidadTotal != null) compras.setCantidadTotal(cantidadTotal);
-				if(direccion != null) compras.setDireccion(direccion);
-				if(precioTotal != null) compras.setPrecioTotal(precioTotal);
-				tmp = compras;
-				break;
-			}//if
-		}//foreach
-		return tmp;
-	}
-	
-	
-	
-	
-}
+	// GET para regresar la lista deCompras
+		// http://localhost:8080/api/compras/
+		public List<Compras> getAllCompras() {
+			return varComprasRepository.findAll();
+		}// getAllComprass
+
+		// GET Compras por su id
+		// http://localhost:8080/api/Comprass/2
+		public Compras getCompras(Long id) {
+			// orElseTrhow lanza una excepción cuando no encuentre el id
+			return varComprasRepository.findById(id)
+					.orElseThrow(() -> new IllegalArgumentException("Compra con el id [" + id + "]no existe"));
+		}
+
+		// DELETE eliminar Compras por su id
+		public Compras deleteCompras(Long id) {
+			Compras tmp = null;
+			if (varComprasRepository.existsById(id)) {
+				tmp = varComprasRepository.findById(id).get();
+				varComprasRepository.deleteById(id);
+			}
+			return tmp;
+		}
+
+		// POST agregar Compras
+		public Compras addCompras(Compras compra) {
+			return varComprasRepository.save(compra);
+		}
+
+		// PUT actualizar datos
+			public Compras updateCompras(Long id, String fecha_compra, String fecha_entrega, Integer cantidad_total, Double precio_total, Long usuarios_id, Integer estatus_entrega) {
+				Compras tmp = null;
+
+				if (varComprasRepository.existsById(id)) {
+					tmp = varComprasRepository.findById(id).get();
+					
+					if(fecha_compra!=null)tmp.setFecha_compra(fecha_compra);
+					if(fecha_entrega!=null)tmp.setFecha_entrega(fecha_entrega);
+					if(cantidad_total !=null)tmp.setCantidad_total(cantidad_total);
+					if(precio_total != null) tmp.setPrecio_total(precio_total);
+					if(usuarios_id != null) tmp.setUsuarios_id(usuarios_id);
+					if(estatus_entrega !=null) tmp.setEstatus_entrega(estatus_entrega);
+					
+					varComprasRepository.save(tmp);
+				}else {
+					System.out.println("Compra con id ["+id+"] no localizada");
+				}
+				return tmp;
+		}
+
+	}// getCompras por su id

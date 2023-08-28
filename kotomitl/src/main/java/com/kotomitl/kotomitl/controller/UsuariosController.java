@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.kotomitl.kotomitl.model.ChangePassword;
 import com.kotomitl.kotomitl.model.Usuarios;
 import com.kotomitl.kotomitl.service.UsuariosService;
 
@@ -62,23 +62,17 @@ public class UsuariosController {
 	}
 	
 	
-	//PUT ACTUALIZAR COMPRA POR SU ID
-	@PutMapping(path = "{usuarioId}")
-	public Usuarios updateUsuarios(@PathVariable ("usuarioId") Long id,
-			
-			@RequestParam(required = false) String nombre,
-			@RequestParam(required = false) String apellido,
-			@RequestParam(required = false) String telefono,
-			@RequestParam(required = false) String password,
-			@RequestParam(required = false) String calle,
-			@RequestParam(required = false) String numero,
-			@RequestParam(required = false) Integer cp,
-			@RequestParam(required = false) String colonia,
-			@RequestParam(required = false) String ciudad,
-			@RequestParam(required = false) Integer estado)
-			{
-		return varUsuariosService.updateUsuarios(id,nombre,apellido,telefono,password,calle,numero,cp,colonia,ciudad,estado);		
-	}
-	
-	
+	//PUT CAMBIAR PASSWORD
+		@PutMapping(path = "{usuarioId}")
+		public Usuarios updateUsuario(@PathVariable ("usuarioId") Long id,
+				@RequestParam(required = false) String nombre,
+				@RequestParam(required = false) String apellido,
+				@RequestParam(required = false) String telefono,
+				@RequestParam(required = false) String email,
+				@RequestBody ChangePassword varChangePassword,
+				@RequestParam(required = false) String domicilio,
+				@RequestParam(required = false) Integer estado){
+			return varUsuariosService.updateUsuario(id,nombre, apellido, telefono,email, varChangePassword, domicilio,estado);		
+		}
+		
 }

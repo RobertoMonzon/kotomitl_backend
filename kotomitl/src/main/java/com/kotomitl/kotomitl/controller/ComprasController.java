@@ -47,14 +47,7 @@ public class ComprasController {
 	
 	
 	//POST AGREGAR COMPRAS
-	/*
-	 {
-        "cantidadTotal": 12,
-        "direccion": "Calle La Calandria",
-        "precioTotal": 2589.99
-    } 
 
-	 * */
 	@PostMapping
 	public Compras addCompras(@RequestBody Compras compras) {
 		return varComprasService.addCompras(compras);
@@ -63,11 +56,14 @@ public class ComprasController {
 	
 	//PUT ACTUALIZAR COMPRA POR SU ID
 	@PutMapping(path = "{compraId}")
-	public Compras updateCompras(@PathVariable ("compraId") Long id,
-			@RequestParam(required = false) Integer cantidadTotal,
-			@RequestParam(required = false) String direccion,
-			@RequestParam(required = false) Double precioTotal) {
-		return varComprasService.updateCompras(id, cantidadTotal, direccion, precioTotal);		
+	public Compras upStringCompras(@PathVariable ("compraId") Long id,
+			@RequestParam(required = false) String fecha_compra,
+			@RequestParam(required = false) String fecha_entrega,
+			@RequestParam(required = false) Integer cantidad_total,
+			@RequestParam(required = false) Double precio_total,
+			@RequestParam(required = false) Long usuarios_id,
+			@RequestParam(required = false) Integer estatus_entrega) {
+		return varComprasService.updateCompras(id, fecha_compra, fecha_entrega,cantidad_total, precio_total, usuarios_id, estatus_entrega);		
 	}
 	
 

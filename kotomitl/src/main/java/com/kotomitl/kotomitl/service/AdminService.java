@@ -1,102 +1,91 @@
 package com.kotomitl.kotomitl.service;
 
-
-import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.kotomitl.kotomitl.model.Admin;
-
+import com.kotomitl.kotomitl.model.ChangePassword;
+import com.kotomitl.kotomitl.repository.AdminRepository;
 
 //Indica que es un servicio
 @Service
 public class AdminService {
-	
-	public final ArrayList<Admin> lista = new ArrayList<>();
-	
-	//Generar constructor para inicializarlo
+
+	private final AdminRepository varAdminRepository;
+
+	// Generar constructor para inicializarlo
 	@Autowired
-	public AdminService() {
-		//Generar una lista default mientras hacemos la conexion a la DB
-				lista.add(new Admin("Administrador 1", "admin1@kotomitl.com", "Pa$$w0rd"));
-				lista.add(new Admin("Administrador 2", "admin2@kotomitl.com", "Pa$$w0rdddd"));
-				lista.add(new Admin("Administrador 3", "admin3@kotomitl.com", "Pa$$w0rddddddddddddddd"));
+	public AdminService(AdminRepository varAdminRepository) {
+		super();
+		this.varAdminRepository = varAdminRepository;
 	}
-	
-	
-	//GET para regresar la lista de los administradores
-	//http://localhost:8080/api/admins/
-	public List<Admin> getAllAdmins(){
-		return this.lista;
-	}//getAllAdmins
-	
-	
-	//GET Admin por su id
-	//http://localhost:8080/api/admins/2
+
+	// GET para regresar la lista de los administradores
+	// http://localhost:8080/api/admins/
+	public List<Admin> getAllAdmins() {
+		return varAdminRepository.findAll();
+	}// getAllAdmins
+
+	// GET Admin por su id
+	// http://localhost:8080/api/admins/2
 	public Admin getAdmin(Long id) {
-		Admin tmp = null;
-		for (Admin admin : lista) {
-			if (admin.getId().equals(id)) {
-				tmp = admin;
-				break;
-			}//if
-		}//foreach
-		return tmp;
+		// orElseTrhow lanza una excepción cuando no encuentre el id
+		return varAdminRepository.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("El Admin con el id [" + id + "]no existe"));
 	}
 
-
-	//DELETE eliminar admin por su id
-	//http://localhost:8080/api/admins/2
+	// DELETE eliminar admin por su id
+	// http://localhost:8080/api/admins/2
 	public Admin deleteAdmin(Long id) {
 		Admin tmp = null;
-		for (Admin admin : lista) {
-			if (admin.getId().equals(id)) {
-				tmp = lista.remove(lista.indexOf(admin));
-				break;
-			}//if
-		}//foreach
+		if (varAdminRepository.existsById(id)) {
+			tmp = varAdminRepository.findById(id).get();
+			varAdminRepository.deleteById(id);
+		}
 		return tmp;
 	}
 
-	//POST agregar admin
-	/* http://localhost:8080/api/admins/
-	  Usar en Body -> raw
-	  
-	 {
-        "nombre": "Administrador 4",
-        "email": "admin4@kotomitl.com",
-        "password": "Pa$$w000000000rdddd"
-    }
-    
+	// POST agregar admin
+	/*
+	 * http://localhost:8080/api/admins/ Usar en Body -> raw
+	 * 
+	 * { "nombre": "Administrador 4", "email": "admin4@kotomitl.com", "password":
+	 * "Pa$$w000000000rdddd" }
+	 * 
 	 */
 	public Admin addAdmin(Admin admin) {
-		lista.add(admin);
-		return admin;
-	}
-	
-	
-	//PUT actualizar datos
-	//http://localhost:8080/api/admins/3
-	//En Params
-	//Key(Nombre de la variable a cambiar)    Value(Nuevo valor a asignar)
-	// nombre									admin8
-	//http://localhost:8080/api/admins/3?nombre=admin8
-	public Admin updateAdmin(Long id, String nombre, String email, String password) {
 		Admin tmp = null;
-		for (Admin admin : lista) {
-			if (admin.getId().equals(id)) {
-				if(nombre != null) admin.setNombre(nombre);
-				if(email != null) admin.setEmail(email);
-				if(password != null) admin.setPassword(password);
-				tmp = admin;
-				break;
-			}//if
-		}//foreach
+		if(varAdminRepository.findByEmail(admin.getEmail()).isEmpty()) {
+			tmp = varAdminRepository.save(admin);	
+		}else {
+			System.out.println("Ya existe ["+admin.getEmail()+"] registrado");
+		}
 		return tmp;
 	}
-	
-		
-	
-}//getAdmin por su id
+
+	// PUT actualizar datos
+	// http://localhost:8080/api/admins/3
+	// En Params
+	// Key(Nombre de la variable a cambiar) Value(Nuevo valor a asignar)
+	// nombre admin8
+	// http://localhost:8080/api/admins/3?nombre=admin8
+	public Admin updateAdmin(Long id, ChangePassword varChangePassword) {
+		Admin tmp = null;
+		if (varAdminRepository.existsById(id)) {
+			tmp = varAdminRepository.findById(id).get();
+			if (varChangePassword.getPassword() != null && varChangePassword.getNewPassword() != null) {
+				if (tmp.getPassword().equals(varChangePassword.getPassword())) {
+					tmp.setPassword(varChangePassword.getNewPassword());
+					varAdminRepository.save(tmp);
+				} else {
+					System.out.println("No coinciden las contraseñas");
+					tmp = null;
+				} // if password
+			} // if !=null
+		} else {
+			System.out.println("Administrador con id [" + id + "] no existe");
+		}
+		return tmp;
+	}
+
+}// getAdmin por su id

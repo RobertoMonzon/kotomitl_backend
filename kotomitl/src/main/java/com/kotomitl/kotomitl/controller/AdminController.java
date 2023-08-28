@@ -10,10 +10,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+//import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kotomitl.kotomitl.model.Admin;
+import com.kotomitl.kotomitl.model.ChangePassword;
 import com.kotomitl.kotomitl.service.AdminService;
 
 //indicar que es un controlador
@@ -62,11 +63,8 @@ public class AdminController {
 	
 	//PUT actualizar datos
 	@PutMapping(path = "{adminId}")
-	public Admin updateAdmin(@PathVariable ("adminId") Long id,
-			@RequestParam(required = false) String nombre,
-			@RequestParam(required = false) String email,
-			@RequestParam(required = false) String password) {
-		return varAdminService.updateAdmin(id, nombre, email, password);		
+	public Admin updateAdmin(@PathVariable ("adminId") Long id, @RequestBody ChangePassword varChangePassword) {
+		return varAdminService.updateAdmin(id, varChangePassword);		
 	}
 	
 
