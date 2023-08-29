@@ -21,6 +21,7 @@ public class KotomitlBackendApplication {
 		registrationBean.setFilter(new JwtFilter());
 		registrationBean.addUrlPatterns("/api/productos/*");
 		registrationBean.addUrlPatterns("/api/admins/*");
+		
 		return registrationBean;
 	};
 }
