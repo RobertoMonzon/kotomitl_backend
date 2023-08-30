@@ -14,7 +14,7 @@ public class KotomitlBackendApplication {
 		SpringApplication.run(KotomitlBackendApplication.class, args);
 	}
 	
-	@Bean 
+	/*@Bean 
 	public FilterRegistrationBean<JwtFilter> jwtFilter(){
 		FilterRegistrationBean<JwtFilter> registrationBean =
 				new FilterRegistrationBean<>();
@@ -23,5 +23,5 @@ public class KotomitlBackendApplication {
 		registrationBean.addUrlPatterns("/api/admins/*");
 		
 		return registrationBean;
-	};
+	};*/
 }
